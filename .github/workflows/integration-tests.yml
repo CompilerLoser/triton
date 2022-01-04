@@ -28,7 +28,7 @@ jobs:
         run: |
           alias python='python3'
           cd python
-          pip3 install -e .
+          pip3 install -e '.[tests]'
 
       - name: Unit tests
         run: |
@@ -45,3 +45,8 @@ jobs:
           sudo nvidia-smi -i 0 -rgc
           sudo nvidia-smi -i 0 -rmc
 
+      - name: Tutorials
+        run: |
+            cd python
+            pip3 install -e '.[tutorials]'
+            for f in tutorials/*.py ; do echo "::notice title=$f::Running $f." ; TRITON_FAST_BENCHMARKS=1 python3 "$f" ; done

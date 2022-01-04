@@ -113,6 +113,9 @@ def do_bench(fn, warmup=25, rep=100, grad_to_none=None, percentiles=[0.5, 0.2, 0
     :param percentiles: Performance percentile to return in addition to the median.
     :type percentiles: list[float]
     """
+    if os.environ.get('TRITON_FAST_BENCHMARKS'):
+        warmup = 2
+        rep = 10
 
     # Estimate the runtime of the function
     fn()
